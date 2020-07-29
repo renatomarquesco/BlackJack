@@ -8,7 +8,7 @@
        var hitOrStand = document.getElementById("Hit");
        var cards_player = document.getElementById("cards-player");
        var cards_dealer = document.getElementById("cards-dealer");
-       var values= [2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,1,1,1,1];
+       var values= [2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11];
        var values2 =[];
        var value_dealer = [];
        var hitButton = document.getElementById("button-hit");
@@ -17,6 +17,7 @@
        var cancel_btn = document.getElementById("cancel");
        var dealerCards = [];
        var result = document.getElementById("result");
+       var ace = 1;
 
 
     
@@ -37,11 +38,6 @@
    values.splice(number,1);
    
    }
-   if (values2[0] ===1 && values2[1]===10){
-       values2[0]=11
-   }
-   if (values2[1] ===1 && values2[0]===10){
-       values2[1]=11}
    
    if (values2[0] + values2[1] < 21){
       
@@ -95,6 +91,10 @@ dealer_points.innerHTML = value_dealer[0] + " Points";
 //function to hit cards//
 
 hitButton.onclick = function (){
+   var two_cards_player = values2[0] + values2[1];
+
+
+   
 var number = Math.floor(Math.random()*deck.length)
 element = deck[number];
 dealtCards.push(element);
@@ -103,15 +103,38 @@ deck.splice(number, 1);
 indexvalue = values[number];
 values2.push(indexvalue);
 values.splice(number,1);
-var sumPlayer =0;
+var sumPlayer = 0;
+var is_there_ace = values2.indexOf(11);
+
+
+
 
 for (var j =0; j<values2.length;j++){
+
+   if(sumPlayer>11 || values2[0] +  values2[1] >11){
+      if (is_there_ace!==-1){
+         values2[is_there_ace]=1;
+      }
+      
+   }
+      
    
    sumPlayer +=values2[j];
+   
 }
+
+console.log(is_there_ace);
+console.log(values2)
 
 
 text_points.innerHTML= sumPlayer;
+
+
+if(sumPlayer>11){
+   if (is_there_ace!==-1){
+      values2[is_there_ace]=1;
+   }
+}
 
 if (sumPlayer===21){
 text_points.innerHTML= "Black Jack! You have 21 points.";
@@ -155,13 +178,6 @@ function dealer_calculation(){
 cards_dealer.innerHTML = dealerCards[1] + dealerCards [0];
 dealer_points.innerHTML = value_dealer[0] + value_dealer[1];
 
-if (value_dealer[0] ===1 && value_dealer[1]===10){
-   value_dealer[0]=11;
-}
-if (value_dealer[1] ===1 && value_dealer[0]===10){
-   value_dealer[1]=11;
-}
-
 
 if (value_dealer[0] + value_dealer[1] <17){
    return setTimeout( hitdealer,1000);
@@ -184,14 +200,26 @@ indexvalue = values[number];
 value_dealer.push(indexvalue);
 values.splice(number,1);
 cards_dealer.innerHTML= dealerCards.join(" "); 
+var ace_dealer = value_dealer.indexOf(11);
+
 
 for (var j =0; j<value_dealer.length;j++){
+
+  if(sumDealer >= 11 || value_dealer[0] +  value_dealer[1] >=11){
+      if (ace_dealer!==-1 ){
+         value_dealer[ace_dealer]=1;
+      }
+   }
+   
    
    sumDealer +=value_dealer[j];
-   
+
+ 
+  
    
 }
-
+console.log(ace_dealer);
+console.log(value_dealer);
 dealer_points.innerHTML= sumDealer;
 if(sumDealer>=17){
        break
@@ -200,12 +228,15 @@ if(sumDealer>=17){
 return setTimeout(endGame,1300)
 
 }
-
 //Function to disclose winner
 function endGame() {
    var sumDealer = 0;
    var sumPlayer = 0;
+   var is_there_ace = values2.indexOf(11);
+   var ace_dealer = value_dealer.indexOf(11);
+
    for (var y =0; y<values2.length; y++){
+
        sumPlayer += values2[y];
    }
    for(var z =0;z<value_dealer.length;z++){

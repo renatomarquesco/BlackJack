@@ -1,6 +1,30 @@
        //Array with deck//
        var deck = ["<img src=./Imgs/2C.png>", "<img src=./Imgs/2D.png>", "<img src=./Imgs/2H.png>", "<img src=./Imgs/2S.png>", "<img src=./Imgs/3C.png>", "<img src=./Imgs/3D.png>", "<img src=./Imgs/3H.png>", "<img src=./Imgs/3S.png>", "<img src=./Imgs/4C.png>", "<img src=./Imgs/4D.png>", "<img src=./Imgs/4H.png>", "<img src=./Imgs/4S.png>", "<img src=./Imgs/5C.png>", "<img src=./Imgs/5D.png>", "<img src=./Imgs/5H.png>", "<img src=./Imgs/5S.png>", "<img src=./Imgs/6C.png>", "<img src=./Imgs/6D.png>", "<img src=./Imgs/6H.png>", "<img src=./Imgs/6S.png>", "<img src=./Imgs/7C.png>", "<img src=./Imgs/7D.png>", "<img src=./Imgs/7H.png>", "<img src=./Imgs/7S.png>", "<img src=./Imgs/8C.png>", "<img src=./Imgs/8D.png>", "<img src=./Imgs/8H.png>", "<img src=./Imgs/8S.png>", "<img src=./Imgs/9C.png>", "<img src=./Imgs/9D.png>", "<img src=./Imgs/9H.png>", "<img src=./Imgs/9S.png>", "<img src=./Imgs/10C.png>", "<img src=./Imgs/10D.png>", "<img src=./Imgs/10H.png>", "<img src=./Imgs/10S.png>", "<img src=./Imgs/JC.png>", "<img src=./Imgs/JD.png>", "<img src=./Imgs/JH.png>", "<img src=./Imgs/JS.png>", "<img src=./Imgs/QC.png>", "<img src=./Imgs/QD.png>", "<img src=./Imgs/QH.png>", "<img src=./Imgs/QS.png>", "<img src=./Imgs/KC.png>", "<img src=./Imgs/KD.png>", "<img src=./Imgs/KH.png>", "<img src=./Imgs/KS.png>", "<img src=./Imgs/AC.png>", "<img src=./Imgs/AD.png>", "<img src=./Imgs/AH.png>", "<img src=./Imgs/AS.png>"];
        // variables to store the values and hands//
+
+var vals = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"];
+var suits = ["C", "D", "H", "S"];
+
+var createDeck = function () {
+  var deck = [];
+  suits.forEach(function (suit) {
+    vals.forEach(function (val) {    
+      var card = {
+        value: val,
+        pretty_name: val + " of " + suit,
+        image_url: "./Imgs/" + val + suit + ".png",
+      }
+      deck.push(card);
+    }
+  }
+  return deck;
+}
+              
+var deck1 = createDeck();
+var deck2 = createDeck();
+
+var foo = [1,2,3].forEach(function(x) { return x + 1; });               
+
        var facedup = "<img src=./Imgs/gray_back.png>";
        var dealtCards = [];
        var text_points = document.getElementById("mypoints");
@@ -23,8 +47,7 @@
 
 
        //Function to deal cards to player//
-       function deal_cards() {
-
+       var deal_cards = function deal_cards () { 
 
           for (var i = 0; i < 2; i++) {
 
@@ -59,6 +82,7 @@
           }
 
        }
+       
        standbutton.onclick = function () {
           text_points.innerHTML = (values2[0] + values2[1]) + " points";
           return dealer_calculation();
